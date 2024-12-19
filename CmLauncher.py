@@ -6,8 +6,8 @@ from PyQt6.QtGui import QFontDatabase, QFont
 from Launcherdesign import Ui_CmLauncher # Импортируем интерфейс из сгенерированного файла
 from PyQt6 import QtWidgets, QtCore
 from minecraft_launcher_lib import install, utils, command
-from PyQt6.QtCore import QSettings, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect, QFileDialog, QLineEdit, QFrame
+from PyQt6.QtCore import QSettings, Qt, QEasingCurve, QPropertyAnimation, QRect, QSize
+from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect, QFileDialog, QLineEdit, QFrame, QPushButton
 from PyQt6.QtGui import QDesktopServices, QColor, QPixmap, QImage
 from PyQt6.QtCore import QUrl, QPropertyAnimation, QEasingCurve, Qt, QPoint
 import psutil  # Для определения доступной оперативной памяти
@@ -22,7 +22,38 @@ import shutil
 import subprocess
 
 
+class Animated:
+    def __init__(self, button: QPushButton):
+        self.button = button
+        self.default_icon_size = button.iconSize()  # Запоминаем стандартный размер иконки
 
+        # Определяем увеличенный размер иконки
+        self.animated_icon_size = QSize(
+            self.default_icon_size.width() - 2,
+            self.default_icon_size.height() - 2
+        )
+
+        # Подключаем анимацию к нажатию
+        button.pressed.connect(self.start_animation)
+
+    def start_animation(self):
+        # Анимация увеличения иконки
+        self.grow_animation = QPropertyAnimation(self.button, b"iconSize")
+        self.grow_animation.setDuration(250)
+        self.grow_animation.setStartValue(self.default_icon_size)
+        self.grow_animation.setEndValue(self.animated_icon_size)
+        self.grow_animation.setEasingCurve(QEasingCurve.Type.InOutSine)
+
+        # Анимация возврата размера иконки
+        self.shrink_animation = QPropertyAnimation(self.button, b"iconSize")
+        self.shrink_animation.setDuration(250)
+        self.shrink_animation.setStartValue(self.animated_icon_size)
+        self.shrink_animation.setEndValue(self.default_icon_size)
+        self.shrink_animation.setEasingCurve(QEasingCurve.Type.InOutSine)
+
+        # Запуск анимаций
+        self.grow_animation.finished.connect(self.shrink_animation.start)
+        self.grow_animation.start()
 
 def prepare_mask(size, antialias=4):
     """Создаёт сглаженную маску круга."""
@@ -82,6 +113,11 @@ class MyApp(QtWidgets.QMainWindow):
         self.game_root = os.path.join(os.path.expanduser("~"), ".CmLauncher")
         self.ui.play_button.clicked.connect(self.handle_start_button)
         self.settings = QSettings("MyCompany", "MyApp")
+
+        self.buttons = [self.ui.settings_button_pg1, self.ui.play_button_pg0, self.ui.button_explorepg2, self.ui.button_mappg3,
+                        self.ui.bober_kombatpg4,
+                        self.ui.settings_button_pg1, self.ui.off_button]  # Добавьте все кнопки из дизайна
+        self.animated_buttons = [Animated(button) for button in self.buttons]
 
         # Инициализация интерфейса и связки сигналов
         self.set_ram_slider()

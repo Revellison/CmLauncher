@@ -1,3 +1,16 @@
+#play_button_pg0 {
+border-radius: 5;
+}
+
+#button_explorepg2, #settings_button_pg1 {
+border-top-left-radius: 5;
+border-top-right-radius: 5;
+}
+#bober_kombatpg4, #off_button {
+border-bottom-left-radius: 5;
+border-bottom-right-radius: 5;
+}
+
 #nickname_widget {
     background-color: #272a30;
     border: 0px solid #000000;
