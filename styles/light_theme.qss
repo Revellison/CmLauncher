@@ -1,0 +1,70 @@
+/* Общий стиль для светлой темы */
+QMainWindow {
+    background-color: #dee2e6;  /* Фон белый */
+}
+
+/* Кнопки */
+QPushButton {
+    background-color: #C8C6CD; /* Фон кнопок */
+    color: black;              /* Черный текст */
+    border: 2px solid transparent;
+    border-radius: 6px;
+}
+
+/* При наведении на кнопку */
+QPushButton:hover {
+    background-color: #B3AFBC; /* Цвет кнопки при наведении */
+}
+
+/* При нажатии на кнопку */
+QPushButton:pressed {
+    background-color: #B497FF;    /* Цвет кнопки при нажатии */
+}
+
+/* Поля ввода (QLineEdit, QTextEdit) */
+QLineEdit, QTextEdit {
+    background-color: #D6D4DA;   /* Фон полей ввода */
+    color: black;              /* Черный текст */
+    border: 2px solid transparent;
+    border-radius: 6px;
+}
+
+/* При наведении на поле ввода */
+QLineEdit:hover, QTextEdit:hover {
+    background-color: #f0f0f0; /* Цвет поля ввода при наведении */
+}
+
+/* Метки */
+QLabel {
+    color: black;              /* Черный текст для QLabel */
+}
+
+/* Комбобоксы */
+QComboBox {
+    background-color: white;   /* Фон комбобокса */
+    color: black;              /* Черный текст */
+    border: 2px solid transparent;
+    border-radius: 6px;
+}
+
+/* Чекбоксы */
+QCheckBox {
+    color: black; 
+}
+
+/* Радиокнопки */
+QRadioButton {
+    color: black;              /* Черный текст для QRadioButton */
+}
+
+/* Списки */
+QListWidget {
+    background-color: white;   /* Фон списка */
+    color: black;              /* Черный текст */
+    border: 2px solid transparent;
+}
+
+/* Списки при наведении */
+QListWidget:item:hover {
+    background-color: #f0f0f0; /* Цвет элемента при наведении */
+}

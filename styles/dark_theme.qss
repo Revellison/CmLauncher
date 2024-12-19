@@ -1,0 +1,108 @@
+#nickname_widget {
+    background-color: #272a30;
+    border: 0px solid #000000;
+    border-radius: 10px;
+    padding: 0px;
+    min-width: 150px;
+    min-height: 30px;
+}
+
+/* Стили для QLineEdit внутри nickname_widget */
+#nickname_widget QLineEdit {
+    background-color: #272a30;
+    border: none;
+    padding: 0px;
+    font-size: 14px;
+    color: white;
+}
+
+#nickname_widget QLineEdit:focus {
+    border: 1px solid white;  /* Синий цвет границы при фокусе */
+}
+
+QMainWindow {
+background-color: #16181C;
+}
+
+
+#play_button {
+background-color: #F0A967;
+color: white;
+border: 0px solid transparent;
+  border-radius: 5px;
+}
+#play_button:hover {
+    background-color: #FFBE81;
+}
+#play_button:pressed {
+background-color: #F0C297;
+}
+
+
+QPushButton {
+    border: 0px solid transparent;
+    border-radius: 0px;
+	background-color: transparent;
+}
+QPushButton:hover {
+    background-color: #393E49;
+}
+
+QPushButton:pressed {
+    background-color: #373c46;
+}
+
+#widget_2, #widget {
+background-color: #525254;
+color: white;
+border: 0px solid transparent;
+  border-radius: 15px;
+}
+
+#settings_button_pg1:checked, #button_mappg3:checked, #button_explorepg2:checked, #bober_kombatpg4:checked, #play_button_pg0:checked
+{
+    background-color: #393E49;
+}
+
+#updates_widget, #console_start_textedit, #widget_12, #other_widget, #other_widget_3, #other_widget_5, #other_widget_6, #explore_widget1, #explore_widget2, #explore_widget3,
+#explore_widget5, #explore_widget4, #explore_widget6, #other_widget_10, #other_widget_7, #other_widget_9, #other_widget_8, #other_widget_16, #modpack_widget_pg0, #server_widget_pg0 {
+
+background-color: #202328;
+}
+
+
+QTextEdit {
+    background-color: #1D1D1D;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 6px;
+}
+
+QTextEdit:hover {
+    background-color: #1E1E1E;
+}
+
+QLabel {
+    color: white;
+}
+
+QComboBox {
+    background-color: #1E1E1E;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 6px;
+}
+
+QLineEdit {
+    background-color: #1D1D1D;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 6px;
+}
+
+QLineEdit:hover {
+    background-color: #1E1E1E;
+}
+#search_lineedit {
+    background-color: transparent;
+}
