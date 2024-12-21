@@ -1,0 +1,760 @@
+body
+{
+   background-color: #16181C;
+   color: #000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 16px;
+   line-height: 1.1875;
+   margin: 0;
+   padding: 0;
+}
+a
+{
+   color: #0000FF;
+   text-decoration: none;
+}
+a:visited
+{
+   color: #800080;
+}
+a:active
+{
+   color: #FF0000;
+}
+a:hover
+{
+   color: #0000FF;
+   text-decoration: none;
+}
+#Layer1
+{
+   background-color: #202328;
+   background-image: none;
+   border-radius: 40px;
+   box-shadow: 0px 0px 6px rgba(0,0,0,0.26);
+   animation: slide-down-in 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms 1 normal both;
+}
+#Layer1:hover
+{
+   color: #000000;
+   background-color: #16181C;
+   border-color: #000000;
+   transition: color 300ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms, background-color 300ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms, border-color 300ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms;
+}
+#Layer1
+{
+   transition: all 500ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms;
+}
+#wb_Text2 
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #000000;
+   border-radius: 0px;
+   padding: 0;
+   margin: 0;
+   text-align: left;
+   animation: text-letterspacing-expand 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms 1 normal both;
+}
+#wb_Text2 div
+{
+   text-align: left;
+}
+#wb_LayoutGrid1
+{
+   clear: both;
+   position: relative;
+   table-layout: fixed;
+   display: table;
+   text-align: center;
+   width: 100%;
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #CCCCCC;
+   border-radius: 0px;
+   box-sizing: border-box;
+   margin: 0;
+}
+#LayoutGrid1
+{
+   box-sizing: border-box;
+   padding: 30px 15px 40px 15px;
+   margin-right: auto;
+   margin-left: auto;
+}
+#LayoutGrid1 > .row
+{
+   margin-right: -15px;
+   margin-left: -15px;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   box-sizing: border-box;
+   font-size: 0;
+   min-height: 1px;
+   padding-right: 15px;
+   padding-left: 15px;
+   position: relative;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   float: left;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #FFFFFF;
+   border-radius: 0px;
+   width: 100%;
+   text-align: left;
+}
+#LayoutGrid1:before,
+#LayoutGrid1:after,
+#LayoutGrid1 .row:before,
+#LayoutGrid1 .row:after
+{
+   display: table;
+   content: " ";
+}
+#LayoutGrid1:after,
+#LayoutGrid1 .row:after
+{
+   clear: both;
+}
+@media (max-width: 480px)
+{
+#LayoutGrid1 > .row > .col-1
+{
+   float: none;
+   width: 100% !important;
+}
+}
+#wb_LayoutGrid3
+{
+   clear: both;
+   position: relative;
+   table-layout: fixed;
+   display: table;
+   text-align: center;
+   width: 100%;
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #CCCCCC;
+   border-radius: 0px;
+   box-sizing: border-box;
+   margin: 0;
+}
+#LayoutGrid3
+{
+   box-sizing: border-box;
+   padding: 20px 15px 100px 15px;
+   margin-right: auto;
+   margin-left: auto;
+}
+#LayoutGrid3 > .row
+{
+   margin-right: -15px;
+   margin-left: -15px;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   box-sizing: border-box;
+   font-size: 0;
+   min-height: 1px;
+   padding-right: 15px;
+   padding-left: 15px;
+   position: relative;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   float: left;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #FFFFFF;
+   border-radius: 0px;
+   width: 100%;
+   text-align: center;
+}
+#LayoutGrid3:before,
+#LayoutGrid3:after,
+#LayoutGrid3 .row:before,
+#LayoutGrid3 .row:after
+{
+   display: table;
+   content: " ";
+}
+#LayoutGrid3:after,
+#LayoutGrid3 .row:after
+{
+   clear: both;
+}
+@media (max-width: 480px)
+{
+#LayoutGrid3 > .row > .col-1
+{
+   float: none;
+   width: 100% !important;
+}
+}
+#wb_Icon1
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #245580;
+   border-radius: 0px;
+   text-align: center;
+   margin: 0;
+   padding: 0;
+   vertical-align: top;
+   transition: all 200ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+#Icon1
+{
+   height: 42px;
+   width: 44px;
+}
+.Icon1
+{
+   position: relative;
+   left: 0;
+   top: 0;
+   display: inline-block;
+   font-family: "Material Icons";
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+}
+.Icon1:before
+{
+   content: "\e5c4";
+}
+#Icon1 i
+{
+   color: #FFFFFF;
+   display: inline-block;
+   font-size: 42px;
+   line-height: 42px;
+   vertical-align: middle;
+   width: 41px;
+   transition: all 200ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+#wb_Icon1:hover #Icon1 i
+{
+   color: #16181C;
+}
+#wb_Section1
+{
+   height: 249px;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   box-sizing: border-box;
+   margin: 0;
+   background-color: #FFFFFF;
+   background-image: none;
+   border: 1px solid #DEE2E6;
+   border-radius: 3px;
+   text-align: center;
+}
+#Section1-card-body
+{
+   flex: 1 1 auto;
+   font-size: 0;
+}
+#Section1-card-item0
+{
+   box-sizing: border-box;
+   margin: 0;
+   position: absolute;
+   left: 5.5%;
+   top: 13.3%;
+   height: 10%;
+   width: 91.9%;
+   padding: 0;
+   color: #FFFFFF;
+   font-family: "Arial Black";
+   font-weight: bold;
+   font-style: normal;
+   font-size: 37px;
+}
+#Section1-card-item1
+{
+   box-sizing: border-box;
+   margin: 0;
+   position: absolute;
+   left: 4.5%;
+   top: 34.9%;
+   height: 20.1%;
+   width: 91.9%;
+   padding: 0;
+   color: #212529;
+   font-family: Arial;
+   font-weight: normal;
+   font-style: normal;
+   font-size: 13px;
+}
+#Section1-card-item2
+{
+   display: inline-flex;
+   align-items: center;
+   box-sizing: border-box;
+   margin: 0;
+   position: absolute;
+   left: 29.8%;
+   top: 79.9%;
+   height: 12%;
+   width: 40.3%;
+   border: 0px solid #0D6EFD;
+   border-radius: 4px;
+   background-color: #0D6EFD;
+   background-image: none;
+   color: #FFFFFF;
+   font-family: Arial;
+   font-weight: normal;
+   font-style: normal;
+   font-size: 13px;
+   justify-content: center;
+   text-align: center;
+}
+#Section1-card-item2 a
+{
+   color: inherit;
+   width: 100%;
+   display: block;
+   padding: 8px 0 8px 0;
+   text-decoration: none;
+}
+#wb_Text2
+{
+   position: absolute;
+   left: 71px;
+   top: 16px;
+   width: 59px;
+   height: 18px;
+   z-index: 0;
+}
+#Layer1
+{
+   position: fixed;
+   text-align: center;
+   left: 50%;
+   margin-left: -79px;
+   top: 10px;
+   width: 159px;
+   height: 50px;
+   z-index: 3;
+}
+#wb_Section1
+{
+   display: flex;
+   width: 100%;
+   z-index: 2;
+}
+#wb_Icon1
+{
+   position: absolute;
+   left: 12px;
+   top: 4px;
+   width: 44px;
+   height: 42px;
+   text-align: center;
+   z-index: 1;
+}
+#Layer1_Container
+{
+   width: 159px;
+   position: relative;
+   margin-left: auto;
+   margin-right: auto;
+   text-align: left;
+}
+@media only screen and (min-width: 480px) and (max-width: 969px)
+{
+body
+{
+   background-color: #16181C;
+   background-image: none;
+}
+#Layer1
+{
+   width: 124px;
+   height: 52px;
+   visibility: visible;
+   display: block;
+}
+#Layer1_Container
+{
+   width: 124px;
+}
+#wb_Text2
+{
+   left: 54px;
+   top: 17px;
+   width: 58px;
+   height: 18px;
+   visibility: visible;
+   display: inline;
+}
+#wb_Text2
+{
+   margin: 0;
+   padding: 0;
+}
+#wb_LayoutGrid1
+{
+   visibility: visible;
+   display: table;
+}
+#wb_LayoutGrid1
+{
+   height: auto;
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+#LayoutGrid1
+{
+   height: auto;
+   padding: 30px 15px 40px 15px;
+}
+#LayoutGrid1 .row
+{
+   margin-right: -15px;
+   margin-left: -15px;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   padding-right: 15px;
+   padding-left: 15px;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   display: block;
+   width: 100%;
+   border: 0px solid #FFFFFF;
+   border-radius: 0px;
+   text-align: left;
+}
+#wb_LayoutGrid3
+{
+   visibility: visible;
+   display: table;
+}
+#wb_LayoutGrid3
+{
+   height: auto;
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+#LayoutGrid3
+{
+   height: auto;
+   padding: 20px 15px 100px 15px;
+}
+#LayoutGrid3 .row
+{
+   margin-right: -15px;
+   margin-left: -15px;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   padding-right: 15px;
+   padding-left: 15px;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   display: block;
+   width: 100%;
+   border: 0px solid #FFFFFF;
+   border-radius: 0px;
+   text-align: center;
+}
+#wb_Icon1
+{
+   left: 9px;
+   top: 4px;
+   width: 44px;
+   height: 42px;
+   visibility: visible;
+   display: inline;
+   margin: 0;
+   padding: 0;
+}
+#Icon1
+{
+   width: 44px;
+   height: 42px;
+}
+#Icon1 i
+{
+   line-height: 42px;
+   font-size: 42px;
+   width: 41px;
+}
+}
+@media only screen and (min-width: 392px) and (max-width: 479px)
+{
+body
+{
+   background-color: #16181C;
+   background-image: none;
+}
+#Layer1
+{
+   width: 138px;
+   height: 50px;
+   visibility: visible;
+   display: block;
+}
+#Layer1_Container
+{
+   width: 138px;
+}
+#wb_Text2
+{
+   left: 61px;
+   top: 17px;
+   width: 69px;
+   height: 18px;
+   visibility: visible;
+   display: inline;
+}
+#wb_Text2
+{
+   margin: 0;
+   padding: 0;
+}
+#wb_LayoutGrid1
+{
+   visibility: visible;
+   display: table;
+}
+#wb_LayoutGrid1
+{
+   height: auto;
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+#LayoutGrid1
+{
+   height: auto;
+   padding: 30px 15px 40px 15px;
+}
+#LayoutGrid1 .row
+{
+   margin-right: -15px;
+   margin-left: -15px;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   padding-right: 15px;
+   padding-left: 15px;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   display: block;
+   width: 100%;
+   border: 0px solid #FFFFFF;
+   border-radius: 0px;
+   text-align: left;
+}
+#wb_LayoutGrid3
+{
+   visibility: visible;
+   display: table;
+}
+#wb_LayoutGrid3
+{
+   height: auto;
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+#LayoutGrid3
+{
+   height: auto;
+   padding: 10px 15px 100px 15px;
+}
+#LayoutGrid3 .row
+{
+   margin-right: -15px;
+   margin-left: -15px;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   padding-right: 15px;
+   padding-left: 15px;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   display: block;
+   width: 100%;
+   border: 0px solid #FFFFFF;
+   border-radius: 0px;
+   text-align: center;
+}
+#wb_Icon1
+{
+   left: 10px;
+   top: 4px;
+   width: 44px;
+   height: 42px;
+   visibility: visible;
+   display: inline;
+   margin: 0;
+   padding: 0;
+}
+#Icon1
+{
+   width: 44px;
+   height: 42px;
+}
+#Icon1 i
+{
+   line-height: 42px;
+   font-size: 42px;
+   width: 41px;
+}
+}
+@media only screen and (max-width: 391px)
+{
+body
+{
+   background-color: #16181C;
+   background-image: none;
+}
+#Layer1
+{
+   width: 135px;
+   height: 52px;
+   visibility: visible;
+   display: block;
+}
+#Layer1_Container
+{
+   width: 135px;
+}
+#wb_Text2
+{
+   left: 67px;
+   top: 18px;
+   width: 53px;
+   height: 18px;
+   visibility: visible;
+   display: inline;
+}
+#wb_Text2
+{
+   margin: 0;
+   padding: 0;
+}
+#wb_LayoutGrid1
+{
+   visibility: visible;
+   display: table;
+}
+#wb_LayoutGrid1
+{
+   height: auto;
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+#LayoutGrid1
+{
+   height: auto;
+   padding: 30px 15px 30px 15px;
+}
+#LayoutGrid1 .row
+{
+   margin-right: -15px;
+   margin-left: -15px;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   padding-right: 15px;
+   padding-left: 15px;
+}
+#LayoutGrid1 > .row > .col-1
+{
+   display: block;
+   width: 100%;
+   border: 0px solid #FFFFFF;
+   border-radius: 0px;
+   text-align: left;
+}
+#wb_LayoutGrid3
+{
+   visibility: visible;
+   display: table;
+}
+#wb_LayoutGrid3
+{
+   height: auto;
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+#LayoutGrid3
+{
+   height: auto;
+   padding: 10px 15px 100px 15px;
+}
+#LayoutGrid3 .row
+{
+   margin-right: -15px;
+   margin-left: -15px;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   padding-right: 15px;
+   padding-left: 15px;
+}
+#LayoutGrid3 > .row > .col-1
+{
+   display: block;
+   width: 100%;
+   border: 0px solid #FFFFFF;
+   border-radius: 0px;
+   text-align: center;
+}
+#wb_Icon1
+{
+   left: 10px;
+   top: 5px;
+   width: 44px;
+   height: 42px;
+   visibility: visible;
+   display: inline;
+   margin: 0;
+   padding: 0;
+}
+#Icon1
+{
+   width: 44px;
+   height: 42px;
+}
+#Icon1 i
+{
+   line-height: 42px;
+   font-size: 42px;
+   width: 41px;
+}
+}
+*:focus {
+    outline: none;
+}
+*:active {
+    -webkit-tap-highlight-color: transparent;
+}
+body {
+    -webkit-tap-highlight-color: transparent;
+}
+
+ #wb_Text1 {
+        user-select: none;
+ }
+#wb_Picture2, #wb_Text2{
+        user-select: none;
+ }
