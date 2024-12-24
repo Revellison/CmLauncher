@@ -38,16 +38,16 @@ background-color: #16181C;
 }
 
 
-#play_button {
-background-color: #F0A967;
+#folder_open, #play_button {
+background-color: #ff9430;
 color: white;
 border: 0px solid transparent;
-  border-radius: 5px;
+  border-radius: 10px;
 }
-#play_button:hover {
-    background-color: #FFBE81;
+#folder_open:hover, #play_button:hover {
+    background-color: #ffa551;
 }
-#play_button:pressed {
+#folder_open:pressed, #play_button:pressed {
 background-color: #F0C297;
 }
 
@@ -78,11 +78,15 @@ border: 0px solid transparent;
 }
 
 #updates_widget, #console_start_textedit, #widget_12, #other_widget, #other_widget_3, #other_widget_5, #other_widget_6, #explore_widget1, #explore_widget2, #explore_widget3,
-#explore_widget5, #explore_widget4, #explore_widget6, #other_widget_10, #other_widget_7, #other_widget_9, #other_widget_8, #other_widget_16, #modpack_widget_pg0, #server_widget_pg0 {
+#explore_widget5, #explore_widget4, #explore_widget6, #other_widget_10, #other_widget_7, #other_widget_9, #other_widget_8, #other_widget_16, #modpack_widget_pg0, #server_widget_pg0{
+
 
 background-color: #202328;
 }
-
+ #widget_7, #widget_6, #widget_5{
+ background-color: #202328;
+ border-radius: 10px;
+ }
 
 QTextEdit {
     background-color: #1D1D1D;
@@ -97,6 +101,7 @@ QTextEdit:hover {
 
 QLabel {
     color: white;
+
 }
 
 QComboBox {

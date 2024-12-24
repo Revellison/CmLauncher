@@ -6,8 +6,8 @@ from PyQt6.QtGui import QFontDatabase, QFont
 from Launcherdesign import Ui_CmLauncher # Импортируем интерфейс из сгенерированного файла
 from PyQt6 import QtWidgets, QtCore
 from minecraft_launcher_lib import install, utils, command
-from PyQt6.QtCore import QSettings, Qt, QEasingCurve, QPropertyAnimation, QRect, QSize
-from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect, QFileDialog, QLineEdit, QFrame, QPushButton
+from PyQt6.QtCore import QSettings, Qt, QEasingCurve, QPropertyAnimation, QRect, QSize, pyqtProperty, QTimer
+from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect, QFileDialog, QLineEdit, QFrame, QPushButton, QLabel, QWidget, QVBoxLayout
 from PyQt6.QtGui import QDesktopServices, QColor, QPixmap, QImage
 from PyQt6.QtCore import QUrl, QPropertyAnimation, QEasingCurve, Qt, QPoint
 import psutil  # Для определения доступной оперативной памяти
@@ -97,6 +97,7 @@ def load_fonts():
         print(f"Шрифт '{font2_family}' успешно загружен!")
 
 
+
 class MyApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -113,6 +114,7 @@ class MyApp(QtWidgets.QMainWindow):
         self.game_root = os.path.join(os.path.expanduser("~"), ".CmLauncher")
         self.ui.play_button.clicked.connect(self.handle_start_button)
         self.settings = QSettings("MyCompany", "MyApp")
+        self.ui.off_button.clicked.connect(self.close_application)
 
         self.buttons = [self.ui.settings_button_pg1, self.ui.play_button_pg0, self.ui.button_explorepg2, self.ui.button_mappg3,
                         self.ui.bober_kombatpg4,
@@ -158,6 +160,10 @@ class MyApp(QtWidgets.QMainWindow):
 
         # Загружаем настройки после полной инициализации виджетов
         self.load_settings()
+
+    def close_application(self):
+        """Close the application."""
+        self.close()
 
     def load_settings(self):
         """Загружает настройки из JSON файла и применяет их к интерфейсу."""
@@ -424,6 +430,7 @@ class MyApp(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    #apply_font_antialiasing(app)
     window = MyApp()
     window.show()
     sys.exit(app.exec())
