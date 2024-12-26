@@ -12,6 +12,7 @@ from PyQt6.QtGui import QDesktopServices, QColor, QPixmap, QImage
 from PyQt6.QtCore import QUrl, QPropertyAnimation, QEasingCurve, Qt, QPoint
 import psutil  # Для определения доступной оперативной памяти
 import os
+from minecraft_loader import set_status
 import sys
 import threading
 import requests
@@ -112,9 +113,9 @@ class MyApp(QtWidgets.QMainWindow):
         self.game_version = "1.21.1"
         self.fabric_version = "1.21.1"
         self.game_root = os.path.join(os.path.expanduser("~"), ".CmLauncher")
-        self.ui.play_button.clicked.connect(self.handle_start_button)
         self.settings = QSettings("MyCompany", "MyApp")
         self.ui.off_button.clicked.connect(self.close_application)
+
 
         self.buttons = [self.ui.settings_button_pg1, self.ui.play_button_pg0, self.ui.button_explorepg2, self.ui.button_mappg3,
                         self.ui.bober_kombatpg4,
@@ -134,14 +135,9 @@ class MyApp(QtWidgets.QMainWindow):
         self.ui.bober_kombatpg4.clicked.connect(lambda: self.switch_page(4))
         self.ui.setavatar.clicked.connect(self.choose_image)
 
-        # Настройка кнопки для запуска игры
-        if self.is_version_installed(self.game_version):
-            self.ui.play_button.setText("Connect")
-        else:
-            self.ui.play_button.setText("download")
 
-        self.ui.play_button.clicked.connect(self.handle_start_button)
 
+        self.ui.update_progressBar.hide()
         self.total_files = 0
         self.files_downloaded = 0
 
@@ -160,6 +156,21 @@ class MyApp(QtWidgets.QMainWindow):
 
         # Загружаем настройки после полной инициализации виджетов
         self.load_settings()
+
+        self.ui.play_button.clicked.connect(self.handle_start_button)
+
+    def handle_start_button(self):
+        """Обрабатывает нажатие кнопки Play."""
+        threading.Thread(target=self.start_minecraft_loader, daemon=True).start()
+
+    def start_minecraft_loader(self):
+        """Запускает Minecraft через Minecraft Loader."""
+        try:
+            import minecraft_loader
+            minecraft_loader.main(self)  # Передаем экземпляр GUI для логирования
+        except Exception as e:
+            self.log_to_console(f"Ошибка: {e}")
+
 
     def close_application(self):
         """Close the application."""
@@ -265,73 +276,6 @@ class MyApp(QtWidgets.QMainWindow):
         except Exception as e:
             print(f"Error: {e}")
 
-    def is_version_installed(self, version_id):
-        """Проверяет, установлена ли указанная версия Minecraft."""
-        installed_versions = minecraft_launcher_lib.utils.get_installed_versions(self.game_root)
-        return any(version["id"] == version_id for version in installed_versions)
-
-    def setup_fabric(self):
-        """Устанавливает Fabric для указанной версии Minecraft."""
-        try:
-            minecraft_launcher_lib.fabric.install_fabric(self.fabric_version, self.game_root)
-            print(f"Fabric для версии {self.fabric_version} успешно установлен.")
-        except Exception as e:
-            print(f"Ошибка при установке Fabric: {e}")
-
-    def install_minecraft(self):
-        """Устанавливает базовую версию Minecraft."""
-        try:
-            callbacks = {
-                "setStatus": self.ui.minecraft_download_label.setText,
-                "setProgress": self.ui.progress_bar.setValue,
-                "setMax": self.ui.progress_bar.setMaximum,
-            }
-            minecraft_launcher_lib.install.install_minecraft_version(self.game_version, self.game_root,
-                                                                     callback=callbacks)
-            print(f"Minecraft версии {self.game_version} успешно установлен.")
-        except Exception as e:
-            print(f"Ошибка при установке Minecraft: {e}")
-
-    def run_minecraft(self):
-        """Запускает Minecraft с установленным Fabric."""
-        try:
-            # Генерация тестовых опций
-            options = minecraft_launcher_lib.utils.generate_test_options()
-
-            # Добавление параметров JVM
-            options["jvmArguments"] = [f"-Xmx{self.ui.RAM_horizontalSlider.value()}M", "-Xms512M"]
-            options["launcherName"] = "CmLauncher"
-            options["launcherVersion"] = "1.0"
-            options["gameDirectory"] = self.game_root
-
-            # Получение команды запуска Minecraft
-            minecraft_command = minecraft_launcher_lib.command.get_minecraft_command(
-                f"fabric-loader-{self.fabric_version}", self.game_root, options
-            )
-
-            # Запуск Minecraft через subprocess
-            subprocess.run(minecraft_command)
-            print("Minecraft успешно запущен.")
-        except Exception as e:
-            print(f"Ошибка при запуске Minecraft: {e}")
-
-    def handle_start_button(self):
-        """Обрабатывает нажатие на кнопку Play."""
-        try:
-            if not self.is_version_installed(self.game_version):
-                print("Minecraft не установлен. Начинаем установку...")
-                self.install_minecraft()
-
-            # Проверяем наличие установленного Fabric
-            fabric_version_id = f"fabric-loader-{self.fabric_version}"
-            if not self.is_version_installed(fabric_version_id):
-                print("Fabric не установлен. Начинаем установку...")
-                self.setup_fabric()
-
-            # После установки запускаем Minecraft
-            self.run_minecraft()
-        except Exception as e:
-            print(f"Ошибка при обработке кнопки Play: {e}")
 
     def set_ram_slider(self):
         total_ram = psutil.virtual_memory().total // (1024 * 1024)

@@ -1,14 +1,81 @@
+/*settings*/
+
+#update_progressBar {
+    border: 2px solid #16181C;
+    border-radius: 4px;
+    background: transparent;
+}
+#update_progressBar::chunk {
+    background: #16181C;
+}
+
+#checkupdates{
+    padding: 5px;
+    background: #16181C;
+    border-radius: 5px;
+}
+
+#checkupdates:hover{
+    background: #393E49;
+}
+
+
+#comboBox{
+        border: 0px;
+        border-radius: 5px;
+        padding: 1px 18px 1px 3px;
+        min-width: 6em;
+        background-color: #16181C;
+    }
+    #comboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 20px;
+        border: 0px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    #comboBox QAbstractItemView {
+        border: 2px solid #1a1c21;
+        selection-background-color: #16181C;
+        background-color: #16181C;
+        border-radius: 5px;
+
+    }
+
+#RAM_horizontalSlider::groove:horizontal {
+    height: 12px;  /* Увеличиваем высоту для более заметного слайдера */
+    background: #16181C;
+    margin: 2px 0;  /* Отступы остаются */
+    border-radius: 5px;
+}
+
+#RAM_horizontalSlider::handle:horizontal {
+    background: white;
+    width: 10px;  /* Увеличиваем ширину ручки для удобства */
+    height: 10px;  /* Добавляем высоту для более заметной ручки */
+    margin: -6px 0;  /* Корректируем отступы с учетом новых размеров */
+    border-radius: 5px;  /* Увеличиваем скругление углов для современного вида */
+    border: 0px;
+}
+
+#theme_text_7, #theme_text_2, #theme_text_15, #Ram_label{
+background-color: transparent;
+border-radius: 10px;
+}
+
 #play_button_pg0 {
 border-radius: 5;
 }
 
 #button_explorepg2, #settings_button_pg1 {
-border-top-left-radius: 5;
-border-top-right-radius: 5;
+border-top-left-radius: 8;
+border-top-right-radius: 8;
 }
 #bober_kombatpg4, #off_button {
-border-bottom-left-radius: 5;
-border-bottom-right-radius: 5;
+border-bottom-left-radius: 8;
+border-bottom-right-radius: 8;
 }
 
 #nickname_widget {
@@ -55,7 +122,7 @@ background-color: #F0C297;
 QPushButton {
     border: 0px solid transparent;
     border-radius: 0px;
-	background-color: transparent;
+	background-color: #202328;
 }
 QPushButton:hover {
     background-color: #393E49;
