@@ -45,18 +45,18 @@
     }
 
 #RAM_horizontalSlider::groove:horizontal {
-    height: 12px;  /* Увеличиваем высоту для более заметного слайдера */
+    height: 12px;
     background: #16181C;
-    margin: 2px 0;  /* Отступы остаются */
+    margin: 2px 0;
     border-radius: 5px;
 }
 
 #RAM_horizontalSlider::handle:horizontal {
     background: white;
-    width: 10px;  /* Увеличиваем ширину ручки для удобства */
-    height: 10px;  /* Добавляем высоту для более заметной ручки */
-    margin: -6px 0;  /* Корректируем отступы с учетом новых размеров */
-    border-radius: 5px;  /* Увеличиваем скругление углов для современного вида */
+    width: 10px;
+    height: 10px;
+    margin: -6px 0;
+    border-radius: 5px;
     border: 0px;
 }
 
@@ -86,16 +86,18 @@ border-bottom-right-radius: 8;
     min-width: 150px;
     min-height: 30px;
 }
-
-/* Стили для QLineEdit внутри nickname_widget */
 #nickname_widget QLineEdit {
     background-color: #272a30;
     border: none;
+    border-radius: 0px;
     padding: 0px;
     font-size: 14px;
     color: white;
 }
-
+#nickname_edit {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
 #nickname_widget QLineEdit:focus {
     border: 1px solid white;  /* Синий цвет границы при фокусе */
 }
@@ -138,7 +140,9 @@ color: white;
 border: 0px solid transparent;
   border-radius: 15px;
 }
-
+#play_button_pg0{
+  border-radius: 8px;
+}
 #settings_button_pg1:checked, #button_mappg3:checked, #button_explorepg2:checked, #bober_kombatpg4:checked, #play_button_pg0:checked
 {
     background-color: #393E49;

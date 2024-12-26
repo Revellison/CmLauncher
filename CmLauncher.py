@@ -7,12 +7,14 @@ from Launcherdesign import Ui_CmLauncher # Импортируем интерфе
 from PyQt6 import QtWidgets, QtCore
 from minecraft_launcher_lib import install, utils, command
 from PyQt6.QtCore import QSettings, Qt, QEasingCurve, QPropertyAnimation, QRect, QSize, pyqtProperty, QTimer
-from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect, QFileDialog, QLineEdit, QFrame, QPushButton, QLabel, QWidget, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect, QFileDialog, QLineEdit, QFrame, QPushButton, QLabel, QWidget, QVBoxLayout, QDialog, QMessageBox
 from PyQt6.QtGui import QDesktopServices, QColor, QPixmap, QImage
-from PyQt6.QtCore import QUrl, QPropertyAnimation, QEasingCurve, Qt, QPoint
+
+from PyQt6.QtCore import QUrl, QPoint
 import psutil  # Для определения доступной оперативной памяти
 import os
-from minecraft_loader import set_status
+#from minecraft_loader import set_status
+from pathlib import Path
 import sys
 import threading
 import requests
@@ -98,7 +100,6 @@ def load_fonts():
         print(f"Шрифт '{font2_family}' успешно загружен!")
 
 
-
 class MyApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -115,7 +116,8 @@ class MyApp(QtWidgets.QMainWindow):
         self.game_root = os.path.join(os.path.expanduser("~"), ".CmLauncher")
         self.settings = QSettings("MyCompany", "MyApp")
         self.ui.off_button.clicked.connect(self.close_application)
-
+        self.appdata_path = Path(os.getenv('APPDATA'))
+        self.minecraft_directory = self.appdata_path / ".CmLauncher"
 
         self.buttons = [self.ui.settings_button_pg1, self.ui.play_button_pg0, self.ui.button_explorepg2, self.ui.button_mappg3,
                         self.ui.bober_kombatpg4,
@@ -126,14 +128,13 @@ class MyApp(QtWidgets.QMainWindow):
         self.set_ram_slider()
         self.ui.RAM_horizontalSlider.valueChanged.connect(self.update_ram_label)
 
-
         # Кнопки для переключения страниц
         self.ui.play_button_pg0.clicked.connect(lambda: self.switch_page(0))
         self.ui.settings_button_pg1.clicked.connect(lambda: self.switch_page(1))
         self.ui.button_explorepg2.clicked.connect(lambda: self.switch_page(2))
         self.ui.button_mappg3.clicked.connect(lambda: self.switch_page(3))
         self.ui.bober_kombatpg4.clicked.connect(lambda: self.switch_page(4))
-        self.ui.setavatar.clicked.connect(self.choose_image)
+
 
 
 
@@ -144,20 +145,59 @@ class MyApp(QtWidgets.QMainWindow):
         # Инициализация виджета для ввода никнейма
         self.nickname_widget = QFrame(self)
         self.nickname_widget.setObjectName("nickname_widget")
-        self.nickname_widget.setFixedSize(150, 30)
+        self.nickname_widget.setFixedSize(150, 65)
         self.nickname_widget.setVisible(False)
 
+        # Применяем стиль для закругления углов
+        self.nickname_widget.setStyleSheet("""
+            QFrame#nickname_widget {
+                border-radius: 6px;
+
+            }
+        """)
+
+        # Поле ввода никнейма
         self.nickname_edit = QLineEdit(self.nickname_widget)
         self.nickname_edit.setPlaceholderText("nickname")
         self.nickname_edit.setGeometry(0, 0, 150, 30)
 
-        self.nickname_edit.textChanged.connect(self.update_nick_start_info_3)
+        # Применяем стиль для поля ввода, чтобы оно также было с закругленными углами
+        self.nickname_edit.setStyleSheet("""
+            QLineEdit {
+                border-radius: 6px;
+            }
+        """)
+
+        # Кнопка выбора аватара
+        self.avatar_button = QPushButton("Выбрать аватар", self.nickname_widget)
+        self.avatar_button.setGeometry(0, 35, 150, 30)  # Размещаем под полем ввода
+        self.avatar_button.clicked.connect(self.choose_image)
+
+        # Применяем стиль для кнопки
+        self.avatar_button.setStyleSheet("""
+            QPushButton {
+                border-radius: 6px;
+            }
+        """)
+
+        # Привязка события нажатия на мини-аватар
         self.ui.miniavatar_label.mousePressEvent = self.toggle_nickname_widget
 
-        # Загружаем настройки после полной инициализации виджетов
-        self.load_settings()
 
+        self.nickname_edit.textChanged.connect(self.update_nick_start_info_3)
+        self.load_settings()
+        self.ui.folder_open.clicked.connect(self.open_folder)
         self.ui.play_button.clicked.connect(self.handle_start_button)
+
+
+
+    def open_folder(self):
+        if self.minecraft_directory.exists():
+            os.system(f'explorer "{self.minecraft_directory}"')
+        else:
+            QMessageBox.warning(self, "Ошибка", f"Директория {self.minecraft_directory} не существует.")
+
+
 
     def handle_start_button(self):
         """Обрабатывает нажатие кнопки Play."""
@@ -173,7 +213,6 @@ class MyApp(QtWidgets.QMainWindow):
 
 
     def close_application(self):
-        """Close the application."""
         self.close()
 
     def load_settings(self):
@@ -257,6 +296,8 @@ class MyApp(QtWidgets.QMainWindow):
             self.avatar_path = image_path  # Сохраняем путь
             print(f"Выбранный путь к изображению: {self.avatar_path}")  # Отладка
             self.set_avatars(image_path)
+
+            self.nickname_widget.setVisible(False)
 
     def set_avatars(self, image_path):
 
