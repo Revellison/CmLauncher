@@ -269,7 +269,7 @@ a:hover
    font-style: normal;
    font-size: 29px;
    text-align: left;
-   animation: animate-fade-in-left 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 250ms 1 normal both;
+   animation: animate-fade-in 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 250ms 1 normal both;
 }
 #Section1-card-item2
 {
@@ -488,11 +488,6 @@ a:hover
    width: 100% !important;
 }
 }
-#wb_LayoutGrid4:hover
-{
-   border-color: #FFFFFF;
-   transition: border-color 500ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms;
-}
 #wb_LayoutGrid4
 {
    transition: all 500ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms;
@@ -633,6 +628,36 @@ a:hover
    border-bottom-color: rgba(255,255,255,0.00);
    transition: border-bottom-color 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86) 0ms;
 }
+#Layer2
+{
+   background-color: #202328;
+   background-image: none;
+   border-radius: 15px;
+   animation: transform-scale-in 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 0ms 1 normal both;
+}
+#wb_Image1
+{
+   vertical-align: top;
+}
+#Image1
+{
+   border: 0px solid #000000;
+   border-radius: 0px;
+   padding: 0;
+   margin: 0;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
+#Layer2_Container
+{
+   width: 200px;
+   position: relative;
+   margin-left: auto;
+   margin-right: auto;
+   text-align: left;
+}
 #wb_Text2
 {
    position: absolute;
@@ -641,6 +666,15 @@ a:hover
    width: 182px;
    height: 18px;
    z-index: 1;
+}
+#wb_Image1
+{
+   position: absolute;
+   left: 45px;
+   top: 45px;
+   width: 111px;
+   height: 111px;
+   z-index: 12;
 }
 #Layer1
 {
@@ -651,7 +685,20 @@ a:hover
    top: 10px;
    width: 316px;
    height: 50px;
-   z-index: 12;
+   z-index: 13;
+}
+#Layer2
+{
+   position: fixed;
+   text-align: center;
+   visibility: hidden;
+   left: 50%;
+   margin-left: -100px;
+   top: 50%;
+   margin-top: -100px;
+   width: 200px;
+   height: 200px;
+   z-index: 17;
 }
 #wb_Section1
 {
@@ -856,7 +903,7 @@ body
    font-style: normal;
    font-size: 16px;
    text-align: left;
-   animation: animate-fade-in-left 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 250ms 1 normal both;
+   animation: animate-fade-in 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 250ms 1 normal both;
 }
 #Section1-card-item2
 {
@@ -1057,6 +1104,37 @@ body
 {
    line-height: 26px;
 }
+#Layer2
+{
+   width: 212px;
+   height: 200px;
+   visibility: hidden;
+   display: none;
+}
+#Layer2_Container
+{
+   width: 212px;
+}
+#wb_Image1
+{
+   left: 51px;
+   top: 45px;
+   width: 111px;
+   height: 111px;
+   visibility: visible;
+   display: inline;
+   margin: 0;
+   padding: 0;
+}
+#Timer1
+{
+   left: 999px;
+   top: 958px;
+   width: 100px;
+   height: 104px;
+   visibility: visible;
+   display: inline;
+}
 }
 @media only screen and (min-width: 392px) and (max-width: 479px)
 {
@@ -1210,7 +1288,7 @@ body
    font-style: normal;
    font-size: 16px;
    text-align: left;
-   animation: animate-fade-in-left 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 250ms 1 normal both;
+   animation: animate-fade-in 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 250ms 1 normal both;
 }
 #Section1-card-item2
 {
@@ -1411,6 +1489,37 @@ body
 {
    line-height: 26px;
 }
+#Layer2
+{
+   width: 200px;
+   height: 200px;
+   visibility: hidden;
+   display: none;
+}
+#Layer2_Container
+{
+   width: 200px;
+}
+#wb_Image1
+{
+   left: 45px;
+   top: 45px;
+   width: 111px;
+   height: 111px;
+   visibility: visible;
+   display: inline;
+   margin: 0;
+   padding: 0;
+}
+#Timer1
+{
+   left: 999px;
+   top: 958px;
+   width: 100px;
+   height: 104px;
+   visibility: visible;
+   display: inline;
+}
 }
 @media only screen and (max-width: 391px)
 {
@@ -1564,7 +1673,7 @@ body
    font-style: normal;
    font-size: 16px;
    text-align: left;
-   animation: animate-fade-in-left 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 250ms 1 normal both;
+   animation: animate-fade-in 1000ms cubic-bezier(0.075, 0.82, 0.165, 1) 250ms 1 normal both;
 }
 #Section1-card-item2
 {
@@ -1764,6 +1873,37 @@ body
 #Button3
 {
    line-height: 26px;
+}
+#Layer2
+{
+   width: 200px;
+   height: 200px;
+   visibility: hidden;
+   display: none;
+}
+#Layer2_Container
+{
+   width: 200px;
+}
+#wb_Image1
+{
+   left: 45px;
+   top: 45px;
+   width: 111px;
+   height: 111px;
+   visibility: visible;
+   display: inline;
+   margin: 0;
+   padding: 0;
+}
+#Timer1
+{
+   left: 999px;
+   top: 958px;
+   width: 100px;
+   height: 104px;
+   visibility: visible;
+   display: inline;
 }
 }
 *:focus {

@@ -9,6 +9,9 @@
 <link href="bober_kombat.png" rel="icon" sizes="640x640" type="image/png">
 <link href="site.css" rel="stylesheet">
 <link href="index.css" rel="stylesheet">
+<script src="jquery-3.7.1.min.js"></script>
+<script src="jquery-ui.min.js"></script>
+<script src="wwb19.min.js"></script>
 </head>
 <body>
   
@@ -39,7 +42,7 @@
 <div id="Section1-card-body">
 <div id="Section1-card-item0">CmLauncher β</div>
 <div id="Section1-card-item1">Лаунчер, соединяющий тебя с нашим уникальным Minecraft сервером – твое новое приключение начинается здесь!</div>
-<div id="Section1-card-item2">Скачать</div>
+<div id="Section1-card-item2" onclick="TimerStartTimer1();ShowObjectWithEffect('Layer2', 1, 'fade', 300);return false;">Скачать</div>
 </div>
 </div>
 </div>
@@ -54,17 +57,13 @@
 <div id="LayoutGrid4">
 <div class="row">
 <div class="col-1">
-<a id="Button14" href="./index.html">Создатели</a>
+<a id="Button14" href="./creators.html">Создатели</a>
 </div>
 <div class="col-2">
-
-<a id="Button1" href="./index.html">///</a>
-
-<a id="Button1" href="./index.html">////</a>
-
+<a id="Button1" href="./nnn.html">?</a>
 </div>
 <div class="col-3">
-<a id="Button2" href="./index.html">Исходный код</a>
+<a id="Button2" href="https://github.com/Revellison/CmLauncher">Исходный код</a>
 </div>
 <div class="col-4">
 <a id="Button3" href="https://discord.gg/qDNFdmbUaf">Дискорд сервер</a>
@@ -76,5 +75,26 @@
 </div>
 </footer>
 </div>
+<div id="Layer2">
+<div id="Layer2_Container">
+<div id="wb_Image1">
+<img src="images/wired-outline-212-arrow-1-rounded-loop-cycle.webp" id="Image1" alt="" width="111" height="111"></div>
+</div>
+</div>
+<script>
+var wb_Timer1;
+function TimerStartTimer1()
+{
+   wb_Timer1 = setTimeout(function()
+   {
+      var event = null;
+      ShowObjectWithEffect('Layer2', 0, 'scale', 500, 'easeOutCirc');
+   }, 1600);
+}
+function TimerStopTimer1()
+{
+   clearTimeout(wb_Timer1);
+}
+</script>
 </body>
 </html>

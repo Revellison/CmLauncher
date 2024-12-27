@@ -6,10 +6,10 @@
         url('MaterialIcons-Regular.woff') format('woff'),
         url('MaterialIcons-Regular.ttf') format('truetype');
 }
-@keyframes animate-fade-in-left
+@keyframes animate-fade-in
 {
-   0% { transform: translate(-100px,0px) rotate(0deg) ; opacity: 0;  }
-   100% { transform: translate(0px,0px) rotate(0deg) ; opacity: 1;  }
+   0% { opacity: 0;  }
+   100% { opacity: 1;  }
 }
 @keyframes animate-fade-in-up
 {
@@ -31,6 +31,11 @@
    0% { opacity: 0; letter-spacing: -0.5em;  }
    50% { opacity: 0.6;  }
    100% { opacity: 1.0;  }
+}
+@keyframes transform-scale-in
+{
+   0% { opacity: 0; transform: rotate(0deg) scale(0,0) ;  }
+   100% { opacity: 1; transform: rotate(0deg) scale(1.0,1.0) ;  }
 }
 h1, .h1
 {
