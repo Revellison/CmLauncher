@@ -9,7 +9,6 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QGraphicsDropShadowEffec
 QPushButton, QLabel, QWidget, QVBoxLayout, QDialog, QMessageBox)
 import psutil
 import os
-from test2 import main
 from pathlib import Path
 import sys
 import threading
@@ -18,6 +17,7 @@ import json
 import  socket
 import shutil
 import subprocess
+from updater import get_current_version, check_for_updates, download_and_update, update_version_json
 
 class Animated:
     def __init__(self, button: QPushButton):
@@ -143,6 +143,42 @@ class MyApp(QtWidgets.QMainWindow):
         self.ui.folder_open.clicked.connect(self.open_folder)
         self.ui.play_button.clicked.connect(self.handle_start_button)
 
+        self.ui.checkupdates.clicked.connect(self.check_updates)
+
+    def check_updates(self):
+        """Проверка и обновление приложения."""
+        current_version = get_current_version()  # Получаем текущую версию из файла
+        print(f"Текущая версия: {current_version}")
+
+        update_info = check_for_updates(current_version)  # Проверяем наличие обновлений
+
+        if update_info:
+            print(f"Доступна новая версия: {update_info['tag_name']}")
+            # Создаем окно с вопросом для пользователя:
+            reply = QMessageBox.question(self, 'Обновление доступно',
+                                         f"Доступна новая версия {update_info['tag_name']}. Хотите установить обновление?",
+                                         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                                         QMessageBox.StandardButton.No)
+
+            if reply == QMessageBox.StandardButton.Yes:
+                # Если пользователь подтвердил установку:
+                if download_and_update(update_info):
+                    update_version_json(update_info['tag_name'])  # Обновление версии в файле
+                    QMessageBox.information(self, 'Успешное обновление',
+                                            "Приложение успешно обновлено! Перезапустите его.",
+                                            QMessageBox.StandardButton.Ok)
+                else:
+                    QMessageBox.critical(self, 'Ошибка обновления',
+                                         "Ошибка при установке обновления. Попробуйте снова.",
+                                         QMessageBox.StandardButton.Ok)
+            else:
+                print("Обновление отменено пользователем.")
+                QMessageBox.information(self, 'Статус', "Обновление было отменено.",
+                                        QMessageBox.StandardButton.Ok)
+        else:
+            print("Вы используете последнюю версию.")
+            QMessageBox.information(self, 'Статус', "Вы используете последнюю версию.",
+                                    QMessageBox.StandardButton.Ok)
 
     def open_folder(self):
         if self.minecraft_directory.exists():
