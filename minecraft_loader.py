@@ -6,12 +6,12 @@ import json
 from pathlib import Path
 import requests, shutil, urllib.parse
 from zipfile import ZipFile
+import hashlib
 
 # Constants
 DIRECT_MRPACK_URL = "https://www.dropbox.com/scl/fi/284edmjcoryuzq9kdz0fb/CmLauncher-Modpack-1.0.0.mrpack?rlkey=hekinnutqwvz16sy86y3pwpbh&st=98822nh7&dl=1"
 APPDATA_PATH = os.path.join(os.getenv('APPDATA'), ".CmLauncher")
 modrinthHeaders = {"User-Agent": "Provi Modpack Installer (https://github.com/Provismet/Modrinth-Modpack-Installer)"}
-
 
 def download_file(url, local_filename):
     with requests.get(url, stream=True, headers=modrinthHeaders) as r:
@@ -21,14 +21,31 @@ def download_file(url, local_filename):
                 f.write(chunk)
     return local_filename
 
-
 def get_filename_from_url(url):
     parsed = urllib.parse.urlparse(url)
     return os.path.basename(parsed.path)
 
+def calculate_file_hash(filepath, hash_type="sha1"):
+    hash_func = hashlib.new(hash_type)
+    with open(filepath, 'rb') as f:
+        while chunk := f.read(8192):
+            hash_func.update(chunk)
+    return hash_func.hexdigest()
 
-def downloadSingleMod(url: str, downloadPath: str) -> None:
+def downloadSingleMod(url: str, downloadPath: str, expected_hash: str = None) -> None:
     modName = os.path.basename(downloadPath)
+    if os.path.exists(downloadPath):
+        if expected_hash:
+            local_hash = calculate_file_hash(downloadPath)
+            if local_hash == expected_hash:
+                print(f"{modName} is already downloaded and verified.")
+                return
+            else:
+                print(f"{modName} hash mismatch. Redownloading...")
+        else:
+            print(f"{modName} already exists. Skipping hash check.")
+            return
+
     response = None
     hadError = False
 
@@ -49,7 +66,6 @@ def downloadSingleMod(url: str, downloadPath: str) -> None:
 
     if not hadError:
         print(f"Downloaded: {modName}")
-
 
 def install_modpack():
     tempDirectory = os.path.join(os.curdir, ".modrinthInstallerTemp")
@@ -84,7 +100,8 @@ def install_modpack():
 
         print(f"Downloading {len(jsonIndex['files'])} mods...")
         for fileData in jsonIndex["files"]:
-            downloadSingleMod(fileData["downloads"][0], os.path.join(APPDATA_PATH, fileData["path"]))
+            mod_path = os.path.join(APPDATA_PATH, fileData["path"])
+            downloadSingleMod(fileData["downloads"][0], mod_path, fileData.get("hashes", {}).get("sha1"))
 
         print("\nModpack installation done.")
     except Exception as e:
@@ -97,7 +114,6 @@ def install_modpack():
         print(f"Failed to remove temporary directory: \"{tempDirectory}\"")
         print("Please remove temporary directory manually.")
 
-
 def load_settings():
     settings_path = Path("settings.json")
     if not settings_path.exists():
@@ -109,12 +125,10 @@ def load_settings():
     except json.JSONDecodeError:
         return {}
 
-
 def save_settings(data):
     settings_path = Path("settings.json")
     with settings_path.open("w", encoding="utf-8") as file:
         json.dump(data, file, indent=4)
-
 
 def launch_minecraft():
     settings = load_settings()
@@ -173,7 +187,6 @@ def launch_minecraft():
     except Exception as e:
         print(f"Error launching Minecraft: {e}")
 
-
 def main():
     settings = load_settings()
 
@@ -188,7 +201,6 @@ def main():
 
     # Launch Minecraft
     launch_minecraft()
-
 
 if __name__ == "__main__":
     main()

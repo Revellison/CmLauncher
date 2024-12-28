@@ -1,71 +1,58 @@
-#pyuic6 -x launcherremake.ui -o design2.py
-from PIL import Image, ImageDraw, ImageFilter, ImageQt
-import minecraft_launcher_lib
-import uuid
-from PyQt6.QtGui import QFontDatabase, QFont
-from Launcherdesign import Ui_CmLauncher # Импортируем интерфейс из сгенерированного файла
-from PyQt6 import QtWidgets, QtCore
-from minecraft_launcher_lib import install, utils, command
-from PyQt6.QtCore import QSettings, Qt, QEasingCurve, QPropertyAnimation, QRect, QSize, pyqtProperty, QTimer
-from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect, QFileDialog, QLineEdit, QFrame, QPushButton, QLabel, QWidget, QVBoxLayout, QDialog, QMessageBox
-from PyQt6.QtGui import QDesktopServices, QColor, QPixmap, QImage
 
-from PyQt6.QtCore import QUrl, QPoint
-import psutil  # Для определения доступной оперативной памяти
+from PIL import Image, ImageDraw, ImageFilter, ImageQt
+import uuid
+from PyQt6.QtGui import QFontDatabase, QFont, QDesktopServices, QColor, QPixmap, QImage
+from Launcherdesign import Ui_CmLauncher
+from PyQt6 import QtWidgets, QtCore
+from PyQt6.QtCore import QSettings, Qt, QEasingCurve, QPropertyAnimation, QRect, QSize, pyqtProperty, QTimer, QUrl, QPoint
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QGraphicsDropShadowEffect, QFileDialog, QLineEdit, QFrame,
+QPushButton, QLabel, QWidget, QVBoxLayout, QDialog, QMessageBox)
+import psutil
 import os
-#from minecraft_loader import set_status
+from test2 import main
 from pathlib import Path
 import sys
 import threading
 import requests
-import os
 import json
 import  socket
 import shutil
 import subprocess
 
-
 class Animated:
     def __init__(self, button: QPushButton):
         self.button = button
-        self.default_icon_size = button.iconSize()  # Запоминаем стандартный размер иконки
+        self.default_icon_size = button.iconSize()
 
-        # Определяем увеличенный размер иконки
         self.animated_icon_size = QSize(
             self.default_icon_size.width() - 2,
             self.default_icon_size.height() - 2
         )
 
-        # Подключаем анимацию к нажатию
         button.pressed.connect(self.start_animation)
 
     def start_animation(self):
-        # Анимация увеличения иконки
         self.grow_animation = QPropertyAnimation(self.button, b"iconSize")
         self.grow_animation.setDuration(250)
         self.grow_animation.setStartValue(self.default_icon_size)
         self.grow_animation.setEndValue(self.animated_icon_size)
         self.grow_animation.setEasingCurve(QEasingCurve.Type.InOutSine)
 
-        # Анимация возврата размера иконки
         self.shrink_animation = QPropertyAnimation(self.button, b"iconSize")
         self.shrink_animation.setDuration(250)
         self.shrink_animation.setStartValue(self.animated_icon_size)
         self.shrink_animation.setEndValue(self.default_icon_size)
         self.shrink_animation.setEasingCurve(QEasingCurve.Type.InOutSine)
 
-        # Запуск анимаций
         self.grow_animation.finished.connect(self.shrink_animation.start)
         self.grow_animation.start()
 
 def prepare_mask(size, antialias=4):
-    """Создаёт сглаженную маску круга."""
     mask = Image.new("L", (size[0] * antialias, size[1] * antialias), 0)
     ImageDraw.Draw(mask).ellipse((0, 0) + mask.size, fill=255)
     return mask.resize(size, Image.Resampling.LANCZOS)
 
 def crop(im, size):
-    """Обрезает и масштабирует изображение под заданный размер."""
     w, h = im.size
     k = w / size[0] - h / size[1]
     if k > 0:
@@ -75,7 +62,6 @@ def crop(im, size):
     return im.resize(size, Image.Resampling.LANCZOS)
 
 def make_circle_avatar(image_path, size):
-    """Создаёт круглую аватарку с использованием сглаженной маски."""
     image = Image.open(image_path).convert("RGBA")
     image = crop(image, size)
     mask = prepare_mask(size, antialias=4)
@@ -83,29 +69,24 @@ def make_circle_avatar(image_path, size):
     return image
 
 def load_fonts():
-
     font1_id = QFontDatabase.addApplicationFont("fonts/NotoSans.ttf")
     if font1_id == -1:
-        print("Ошибка: шрифт 'NotoSans' не загружен!")
+        print("error")
     else:
         font1_family = QFontDatabase.applicationFontFamilies(font1_id)[0]
-        print(f"Шрифт '{font1_family}' успешно загружен!")
 
-
-    font2_id = QFontDatabase.addApplicationFont("fonts/NicoMoji-Regular.ttf")
+    font2_id = QFontDatabase.addApplicationFont("fonts/Rubik-VariableFont_wght.ttf")
     if font2_id == -1:
-        print("Ошибка: шрифт 'NicoMoji' не загружен!")
+        print("error")
     else:
         font2_family = QFontDatabase.applicationFontFamilies(font2_id)[0]
-        print(f"Шрифт '{font2_family}' успешно загружен!")
-
 
 class MyApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         load_fonts()
         self.isAnimating = False
-        self.ui = Ui_CmLauncher()  # Ваш UI класс
+        self.ui = Ui_CmLauncher()
         self.ui.setupUi(self)
         self.ui.stackedWidget.setCurrentIndex(0)
         self.apply_theme("styles/dark_theme.qss")
@@ -124,71 +105,43 @@ class MyApp(QtWidgets.QMainWindow):
                         self.ui.settings_button_pg1, self.ui.off_button]  # Добавьте все кнопки из дизайна
         self.animated_buttons = [Animated(button) for button in self.buttons]
 
-        # Инициализация интерфейса и связки сигналов
         self.set_ram_slider()
         self.ui.RAM_horizontalSlider.valueChanged.connect(self.update_ram_label)
 
-        # Кнопки для переключения страниц
+        #swich_page
         self.ui.play_button_pg0.clicked.connect(lambda: self.switch_page(0))
         self.ui.settings_button_pg1.clicked.connect(lambda: self.switch_page(1))
         self.ui.button_explorepg2.clicked.connect(lambda: self.switch_page(2))
         self.ui.button_mappg3.clicked.connect(lambda: self.switch_page(3))
         self.ui.bober_kombatpg4.clicked.connect(lambda: self.switch_page(4))
 
-
-
-
         self.ui.update_progressBar.hide()
         self.total_files = 0
         self.files_downloaded = 0
 
-        # Инициализация виджета для ввода никнейма
         self.nickname_widget = QFrame(self)
         self.nickname_widget.setObjectName("nickname_widget")
-        self.nickname_widget.setFixedSize(150, 65)
+        self.nickname_widget.setFixedSize(140, 90)
         self.nickname_widget.setVisible(False)
 
-        # Применяем стиль для закругления углов
-        self.nickname_widget.setStyleSheet("""
-            QFrame#nickname_widget {
-                border-radius: 6px;
-
-            }
-        """)
-
-        # Поле ввода никнейма
         self.nickname_edit = QLineEdit(self.nickname_widget)
         self.nickname_edit.setPlaceholderText("nickname")
         self.nickname_edit.setGeometry(0, 0, 150, 30)
 
-        # Применяем стиль для поля ввода, чтобы оно также было с закругленными углами
-        self.nickname_edit.setStyleSheet("""
-            QLineEdit {
-                border-radius: 6px;
-            }
-        """)
-
-        # Кнопка выбора аватара
         self.avatar_button = QPushButton("Выбрать аватар", self.nickname_widget)
-        self.avatar_button.setGeometry(0, 35, 150, 30)  # Размещаем под полем ввода
+        self.avatar_button.setGeometry(0, 30, 150, 30)
         self.avatar_button.clicked.connect(self.choose_image)
 
-        # Применяем стиль для кнопки
-        self.avatar_button.setStyleSheet("""
-            QPushButton {
-                border-radius: 6px;
-            }
-        """)
+        self.save_button = QPushButton("Сохранить", self.nickname_widget)
+        self.save_button.setGeometry(0, 60, 150, 30)
+        self.save_button.clicked.connect(self.save_settings)
 
-        # Привязка события нажатия на мини-аватар
         self.ui.miniavatar_label.mousePressEvent = self.toggle_nickname_widget
-
 
         self.nickname_edit.textChanged.connect(self.update_nick_start_info_3)
         self.load_settings()
         self.ui.folder_open.clicked.connect(self.open_folder)
         self.ui.play_button.clicked.connect(self.handle_start_button)
-
 
 
     def open_folder(self):
@@ -197,39 +150,30 @@ class MyApp(QtWidgets.QMainWindow):
         else:
             QMessageBox.warning(self, "Ошибка", f"Директория {self.minecraft_directory} не существует.")
 
-
-
     def handle_start_button(self):
-        """Обрабатывает нажатие кнопки Play."""
         threading.Thread(target=self.start_minecraft_loader, daemon=True).start()
 
     def start_minecraft_loader(self):
-        """Запускает Minecraft через Minecraft Loader."""
         try:
             import minecraft_loader
-            minecraft_loader.main(self)  # Передаем экземпляр GUI для логирования
+            minecraft_loader.main()
         except Exception as e:
-            self.log_to_console(f"Ошибка: {e}")
-
+            print(f"Ошибка: {e}")
 
     def close_application(self):
         self.close()
 
     def load_settings(self):
-        """Загружает настройки из JSON файла и применяет их к интерфейсу."""
         if os.path.exists(self.settings_file):
             with open(self.settings_file, "r") as f:
                 settings = json.load(f)
 
-            # Загружаем значение RAM и устанавливаем его в слайдер
             self.loaded_ram_value = settings.get("ram", 2048)
             self.ui.RAM_horizontalSlider.setValue(self.loaded_ram_value)
 
-            # Загружаем никнейм и устанавливаем его в nickname_edit
             nickname = settings.get("nickname", "")
             self.nickname_edit.setText(nickname)
 
-            # Загружаем путь к аватарке
             avatar_path = settings.get("avatar_path", "")
             if avatar_path and os.path.exists(avatar_path):
                 self.avatar_path = avatar_path
@@ -237,47 +181,56 @@ class MyApp(QtWidgets.QMainWindow):
             else:
                 self.avatar_path = ""
         else:
-            # Устанавливаем значения по умолчанию
             self.loaded_ram_value = 2048
             self.avatar_path = ""
 
     def closeEvent(self, event):
-        """Переопределение метода закрытия окна."""
-        print("closeEvent вызван")  # Проверка, вызывается ли метод
-        self.save_settings_on_close(event)  # Вызов сохранения настроек
+
+        print("closeEvent вызван")
+        self.save_settings_on_close(event)
 
     def save_settings_on_close(self, event):
-        """Сохраняет настройки перед закрытием приложения."""
-        # Отладка
-        print(f"Сохранение настроек...")
         print(f"Путь к аватарке: {getattr(self, 'avatar_path', 'Не установлен')}")
 
         settings = {
             "nickname": self.nickname_edit.text(),
             "ram": self.ui.RAM_horizontalSlider.value(),
-            "avatar_path": getattr(self, "avatar_path", "")  # Сохраняем путь или пустую строку
+            "avatar_path": getattr(self, "avatar_path", "")
+        }
+        try:
+            with open(self.settings_file, "w") as f:
+                json.dump(settings, f, indent=4)
+                print("Настройки успешно сохранены.")
+        except Exception as e:
+            print(f"settings save error: {e}")
+        event.accept()
+
+    def save_settings(self):
+        print(f"Путь к аватарке: {getattr(self, 'avatar_path', 'Не установлен')}")
+
+        settings = {
+            "nickname": self.nickname_edit.text(),
+            "ram": self.ui.RAM_horizontalSlider.value(),
+            "avatar_path": getattr(self, "avatar_path", "")
         }
 
         try:
             with open(self.settings_file, "w") as f:
-                json.dump(settings, f, indent=4)  # Сохраняем с отступами для читабельности
+                json.dump(settings, f, indent=4)
                 print("Настройки успешно сохранены.")
         except Exception as e:
-            print(f"Ошибка при сохранении настроек: {e}")
-
-        event.accept()
+            print(f"settings save error: {e}")
 
     def toggle_nickname_widget(self, event):
-        """Переключает видимость виджета для ввода никнейма."""
+
         if self.nickname_widget.isVisible():
             self.nickname_widget.setVisible(False)
         else:
             miniavatar_pos = self.ui.miniavatar_label.pos()
-            self.nickname_widget.move(miniavatar_pos.x() + 60, miniavatar_pos.y())  # Сдвиг на 60px вправо
+            self.nickname_widget.move(miniavatar_pos.x() + 60, miniavatar_pos.y())
             self.nickname_widget.setVisible(True)
 
     def update_nick_start_info_3(self, text):
-        """Обновляет текст в QLabel nick_start_info_3."""
         if hasattr(self.ui, 'nick_start_info_3'):
             self.ui.nick_start_info_3.setText(text)
         else:
@@ -292,9 +245,9 @@ class MyApp(QtWidgets.QMainWindow):
             "Images (*.png *.jpg *.jpeg *.bmp *.gif)"
         )
 
-        if image_path:  # Если файл выбран
-            self.avatar_path = image_path  # Сохраняем путь
-            print(f"Выбранный путь к изображению: {self.avatar_path}")  # Отладка
+        if image_path:
+            self.avatar_path = image_path
+            print(f"Выбранный путь к изображению: {self.avatar_path}")
             self.set_avatars(image_path)
 
             self.nickname_widget.setVisible(False)
@@ -302,13 +255,11 @@ class MyApp(QtWidgets.QMainWindow):
     def set_avatars(self, image_path):
 
         try:
-            # Круглая аватарка для avatar_label (120x120)
             circular_avatar_large = make_circle_avatar(image_path, (120, 120))
             qt_image_large = ImageQt.ImageQt(circular_avatar_large)
             pixmap_large = QPixmap.fromImage(QImage(qt_image_large))
             self.ui.avatar_label.setPixmap(pixmap_large)
 
-            # Круглая аватарка для miniavatar_label (60x60)
             circular_avatar_small = make_circle_avatar(image_path, (60, 60))
             qt_image_small = ImageQt.ImageQt(circular_avatar_small)
             pixmap_small = QPixmap.fromImage(QImage(qt_image_small))
@@ -316,7 +267,6 @@ class MyApp(QtWidgets.QMainWindow):
 
         except Exception as e:
             print(f"Error: {e}")
-
 
     def set_ram_slider(self):
         total_ram = psutil.virtual_memory().total // (1024 * 1024)
@@ -328,8 +278,6 @@ class MyApp(QtWidgets.QMainWindow):
         self.ui.RAM_horizontalSlider.setValue(self.loaded_ram_value)
         self.update_ram_label()
 
-
-
     def open_minecraft_folder(self):
         QDesktopServices.openUrl(QUrl.fromLocalFile(self.game_root))
 
@@ -337,24 +285,16 @@ class MyApp(QtWidgets.QMainWindow):
         ram_mb = self.ui.RAM_horizontalSlider.value()
         self.ui.Ram_label.setText(f"{ram_mb} MB")
 
-
-
     def set_max(self, max_value):
         self.ui.progress_bar.setMaximum(max_value)
 
-
-
     def hide_progress(self):
         self.ui.minecraft_download_label.hide()
-
-
 
     def update_nickname_display(self):
         nickname = self.ui.Nickname_input.text()
         self.ui.nick_start_info.setText(nickname)
         self.ui.nick_profile_info.setText(nickname)
-
-
 
     def apply_theme(self, theme_file):
         with open(theme_file, "r") as f:
