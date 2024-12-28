@@ -147,23 +147,21 @@ class MyApp(QtWidgets.QMainWindow):
 
     def check_updates(self):
         """Проверка и обновление приложения."""
-        current_version = get_current_version()  # Получаем текущую версию из файла
+        current_version = get_current_version()
         print(f"Текущая версия: {current_version}")
 
-        update_info = check_for_updates(current_version)  # Проверяем наличие обновлений
+        update_info = check_for_updates(current_version)
 
         if update_info:
             print(f"Доступна новая версия: {update_info['tag_name']}")
-            # Создаем окно с вопросом для пользователя:
             reply = QMessageBox.question(self, 'Обновление доступно',
                                          f"Доступна новая версия {update_info['tag_name']}. Хотите установить обновление?",
                                          QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
                                          QMessageBox.StandardButton.No)
 
             if reply == QMessageBox.StandardButton.Yes:
-                # Если пользователь подтвердил установку:
                 if download_and_update(update_info):
-                    update_version_json(update_info['tag_name'])  # Обновление версии в файле
+                    update_version_json(update_info['tag_name'])
                     QMessageBox.information(self, 'Успешное обновление',
                                             "Приложение успешно обновлено! Перезапустите его.",
                                             QMessageBox.StandardButton.Ok)
